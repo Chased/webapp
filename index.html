@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Touch 'n Go</title>
+    
+    <!-- Подключение манифеста -->
+    <link rel="manifest" href="/manifest.json">
+    
+    <!-- Настройки для iOS -->
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Мой PWA">
+    
+    <style>
+        /* Сброс стилей */
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+        /* Попытка сделать текст максимально похожим на iOS */
+        body {
+          font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue",
+                       "Roboto", "Segoe UI", Arial, sans-serif;
+          -webkit-text-size-adjust: 100%;
+          line-height: 1.3; /* iOS использует плотную посадку */
+          background-color: #fff;
+          color: #000;
+        }
+        /* Верхняя полоса */
+        .navbar {
+          background-color: #215ab6;
+          color: #fff;
+          height: 56px;
+          display: flex;
+          align-items: center;
+          padding: 0 16px;
+        }
+        .back-arrow {
+          font-size: 20px;
+          margin-right: 12px;
+          cursor: pointer;
+          /* iOS-системный символ «Назад» чуть другой, но для примера пойдёт */
+        }
+        .navbar-title {
+          font-size: 18px;
+          font-weight: 600;
+        }
+        .content {
+          padding: 16px;
+        }
+        /* Сумма и «points» */
+        .top-row {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 16px;
+        }
+        .amount {
+          font-size: 38px;
+          font-weight: 300;
+          color: #0064ff;
+        }
+        .points {
+          font-size: 14px;
+          color: #666;
+          border-radius: 4px; 
+          border: 1px solid #ccc;
+          padding: 2px 8px;
+          background-color: #e9e9e9
+          
+
+        }
+        /* Строки с деталями */
+        .detail-row {
+          display: flex;
+          justify-content: space-between;
+          padding: 16px 0;
+          font-size: 18px;
+          border-bottom: 1px solid #eee;
+  
+        }
+        .detail-label {
+          color: #777777;
+          font-weight: 270;
+          white-space: nowrap;
+          margin-right: 16px;
+          white-space: nowrap; 
+        }
+        .detail-value {
+          font-weight: 270;     
+          color: #000;
+          text-align: right;
+          flex: 1 1 auto;            /* Разрешаем блоку занимать оставшееся место и сжиматься при необходимости */
+          white-space: normal;
+          word-wrap: break-word;      /* Для старых браузеров */
+          overflow-wrap: break-word;  /* CSS3 стандарт */
+          word-break: break-all;  
+
+        }
+        .detail-row:last-child {
+          border-bottom: none;
+        }
+        /* Иконка DuitNow, если нужна */
+        .duitnow-icon {
+          height: 25px;
+          vertical-align: middle;
+          margin-right: 4px;
+        }
+      </style>
+</head>
+
+
+<!-- «Навбар» -->
+<div class="navbar">
+    <div class="back-arrow">&#x25C0;</div>
+    <div class="navbar-title">Details</div>
+  </div>
+  
+  <div class="content">
+    <!-- Сумма и очки -->
+  
+    <div class="top-row">
+      <div class="amount" contenteditable="true">-RM234.57</div>
+      <div class="points">0 points</div>
+    </div>
+  
+    <!-- Детали платежа -->
+    <div class="detail-row">
+      <div class="detail-label">Transaction Type</div>
+      <div class="detail-value">
+        <img src="/icons/duitnow_icon.png" alt="DuitNow" class="duitnow-icon">
+        DuitNow QR
+      </div>
+    </div>
+    <div class="detail-row">
+      <div class="detail-label">Merchant</div>
+      <div class="detail-value">HAUSOME MANAGEMENT &amp; RENO</div>
+    </div>
+    <div class="detail-row">
+      <div class="detail-label">Pay Via</div>
+      <div class="detail-value">Public Bank Berhad DuitNow QR</div>
+    </div>
+    <div class="detail-row">
+      <div class="detail-label">Payment Details</div>
+      <div class="detail-value">DuitNow QR - HAUSOME MANAGEMENT &amp; RENO</div>
+    </div>
+    <div class="detail-row">
+      <div class="detail-label">Payment Method</div>
+      <div class="detail-value">eWallet Balance</div>
+    </div>
+    <div class="detail-row">
+      <div class="detail-label">Date/Time</div>
+      <div class="detail-value"contenteditable="true">20/03/2025 13:47:11</div>
+    </div>
+    <div class="detail-row">
+      <div class="detail-label">Wallet Ref</div>
+      <div class="detail-value">
+        20250321101100000010000TNGOW3MY17126416123349
+      </div>
+    </div>
+    <div class="detail-row">
+      <div class="detail-label">Status</div>
+      <div class="detail-value">Successful</div>
+    </div>
+    <div class="detail-row">
+      <div class="detail-label">Transaction No.</div>
+      <div class="detail-value">20250321TNGDMYNB030OQR75513599</div>
+    </div>
+    <div class="detail-row">
+      <div class="detail-label">DuitNow Ref No.</div>
+      <div class="detail-value">20250321TNGDMYNB030OQR75513599</div>
+    </div>
+  </div>
+  
+
+<script>
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js')
+            .then(() => console.log('Service Worker зарегистрирован'))
+            .catch(error => console.log('Ошибка Service Worker:', error));
+    }
+</script>
+</body>
+</html>
